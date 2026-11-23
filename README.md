@@ -1,32 +1,32 @@
 # Native AWS CI/CD Pipeline - CodeCommit, CodeBuild, CodeDeploy
 
-## 🚀 Project Overview
-Implemented fully native AWS CI/CD pipeline without Jenkins - using only AWS developer tools. Project 2 of Entri Elevate portfolio (2026).
+Implemented fully native AWS CI/CD pipeline without Jenkins - using only AWS developer tools.
 
-## 🏗️ Architecture
-**Pipeline:** CodeCommit → CodeBuild → S3 Artifact → CodeDeploy → EC2 (In-Place Deployment)
+## Architecture
+CodeCommit -> CodeBuild -> S3 -> CodeDeploy -> EC2
 
-## 🛠️ Tech Stack
-- **AWS Services:** CodeCommit, CodeBuild, CodeDeploy, EC2, S3, IAM
-- **Concepts:** buildspec.yml, appspec.yml, AllAtOnce Deployment
-- **OS:** Amazon Linux 2
+## Measurable Output
+- Stages: 5 | Services: 6 | Config Files: 2 | EC2 Targets: 1 | Manual Steps: 0
+- Pipeline: CodeCommit, CodeBuild, S3 artifact, CodeDeploy, EC2
+- Services Used: CodeCommit, CodeBuild, S3, CodeDeploy, EC2, IAM
 
-## ⚙️ Key Implementations
-- ✅ Source code hosted in AWS CodeCommit
-- ✅ Build phase using CodeBuild with buildspec.yml
-- ✅ Artifact stored in S3 bucket
-- ✅ Deployed to EC2 via CodeDeploy with appspec.yml
-- ✅ IAM roles for CodeBuild & CodeDeploy
-- ✅ In-Place deployment strategy
+## How It Works
+1. Developer pushes code to CodeCommit
+2. CodeBuild builds using buildspec.yml
+3. Build artifact stored in S3
+4. CodeDeploy deploys to EC2 using appspec.yml
+5. Lifecycle hooks run on EC2: BeforeInstall, AfterInstall, ApplicationStart, ValidateService
 
-## 🔧 Deployment Files
-- `buildspec.yml` - Build instructions
-- `appspec.yml` - Deployment instructions
-- `scripts/` - Lifecycle hooks (BeforeInstall, AfterInstall, etc.)
-
-## 👨‍💻 Author
-Midhun Kandiyil Meethal | Transitioning from 14 Yrs Service Engineer to Cloud Operations
-[LinkedIn](https://linkedin.com/in/midhun-kandiyil-meethal-cloudops) | Bangalore
-
----
-AWS Native CI/CD Project
+## buildspec.yml (CodeBuild)
+```yaml
+version: 0.2
+phases:
+  install:
+    commands:
+            - echo Installing dependencies
+  build:
+    commands:
+            - echo Build started
+artifacts:
+  files:
+        - '**/*'
